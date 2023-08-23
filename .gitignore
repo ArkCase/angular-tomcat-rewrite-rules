@@ -1,0 +1,6 @@
+**/*.sw?
+**/.sw?
+*.sw?
+.sw?
+.flattened-pom.xml
+target

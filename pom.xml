@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.armedia.arkcase</groupId>
+    <artifactId>external-portal-ui-rewrite-rules</artifactId>
+    <version>${revision}</version>
+    <packaging>jar</packaging>
+    <name>ArkCase External Portal UI Rewrite Rules</name>
+    <description>Tomcat rewirte rules for deploying ArkCase FOIA External Portal UI</description>
+    <inceptionYear>2023</inceptionYear>
+    <licenses>
+        <license>
+            <name>GNU Lesser General Public License</name>
+            <url>https://www.gnu.org/licenses/lgpl-3.0.en.html</url>
+        </license>
+    </licenses>
+    <organization>
+        <name>ArkCase LLC</name>
+        <url>http://www.arkcase.com</url>
+    </organization>
+
+    <properties>
+        <revision>1.0.0</revision>
+    </properties>
+
+    <scm>
+        <connection>scm:git:${git.repository}</connection>
+        <developerConnection>scm:git:${git.repository}</developerConnection>
+        <url>${git.repository}</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>arkcase.snapshots</id>
+            <name>ArkCase Snapshots</name>
+            <url>https://project.armedia.com/nexus/content/repositories/arkcase.snapshot/</url>
+        </snapshotRepository>
+        <repository>
+            <id>arkcase.release</id>
+            <name>ArkCase Release</name>
+            <url>https://project.armedia.com/nexus/content/repositories/arkcase.release/</url>
+        </repository>
+    </distributionManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
+                <configuration>
+                    <archive>
+                        <addMavenDescriptor>false</addMavenDescriptor>
+                        <manifestEntries>
+                            <SCM-Branch>${scmBranch}</SCM-Branch>
+                            <SCM-Revision>${commitHash}</SCM-Revision>
+                            <SCM-Build-Time>${buildTimestamp}</SCM-Build-Time>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>create-commitHash</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                        <configuration>
+                            <doCheck>false</doCheck>
+                            <doUpdate>false</doUpdate>
+                            <shortRevisionLength>40</shortRevisionLength>
+                            <getRevisionOnlyOnce>true</getRevisionOnlyOnce>
+                            <revisionOnScmFailure>unknown</revisionOnScmFailure>
+                            <buildNumberPropertyName>commitHash</buildNumberPropertyName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>create-buildTimestamp</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>create-timestamp</goal>
+                        </goals>
+                        <configuration>
+                                <timestampPropertyName>buildTimestamp</timestampPropertyName>
+                                <timestampFormat>yyyy-MM-dd'T'HH:mm:ssZZ</timestampFormat>
+                                <timezone>UTC</timezone>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>1.3.0</version>
+                <configuration>
+                    <updatePomFile>true</updatePomFile>
+                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>flatten.process-resources</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
