@@ -2,11 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.armedia.arkcase</groupId>
-    <artifactId>external-portal-ui-rewrite-rules</artifactId>
+    <artifactId>angular-tomcat-rewrite-rules</artifactId>
     <version>${revision}</version>
     <packaging>jar</packaging>
-    <name>ArkCase External Portal UI Rewrite Rules</name>
-    <description>Tomcat rewirte rules for deploying ArkCase FOIA External Portal UI</description>
+    <name>ArkCase Angular Rewrite Rules for Tomcat</name>
+    <description>Tomcat Rewirte Rules for Deploying ArkCase Angular Single-Page Applications</description>
     <inceptionYear>2023</inceptionYear>
     <licenses>
         <license>
